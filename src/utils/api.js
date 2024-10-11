@@ -138,14 +138,17 @@ const api = (() => {
       }),
     });
     const responseJson = await response.json();
-    const { success, message } = responseJson;
-    if (success !== true) {
+    const { success, message, data } = responseJson;
+
+    if (!success) {
       throw new Error(message);
     }
-    const {
-      data: { todo_id },
-    } = responseJson;
-    return todo_id;
+
+    if (!data || !data.todo_id) {
+      throw new Error("Todo update failed: todo_id missing in response.");
+    }
+
+    return data.todo_id;
   }
 
   async function deleteTodo(id) {

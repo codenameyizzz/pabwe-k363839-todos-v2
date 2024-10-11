@@ -31,21 +31,42 @@ function TodoItem({ todo, onDeleteTodo }) {
     setEditDescription(todo.description);
   };
 
-  const handleSaveEdit = () => {
-    dispatch(
-      asyncUpdateTodo({
-        id: todo.id,
-        title: editTitle,
-        description: editDescription,
-        is_finished: todo.is_finished,
-      })
-    );
-    setIsEditing(false); // Tutup mode edit setelah penyimpanan
+  const handleSaveEdit = async () => {
+    try {
+      await dispatch(
+        asyncUpdateTodo({
+          id: todo.id,
+          title: editTitle,
+          description: editDescription,
+          is_finished: todo.is_finished,
+        })
+      );
+      Swal.fire({
+        title: "Success",
+        text: "Todo berhasil diubah!",
+        icon: "success",
+        confirmButtonText: "Tutup",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false,
+      });
+      setIsEditing(false); // Close edit mode
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+        confirmButtonText: "Tutup",
+        customClass: {
+          confirmButton: "btn btn-danger",
+        },
+        buttonsStyling: false,
+      });
+    }
   };
 
-  
   return (
-    
     <div className="card mt-3">
       <div className="card-body">
         <div className="row align-items-center">
@@ -69,7 +90,6 @@ function TodoItem({ todo, onDeleteTodo }) {
               </div>
             ) : (
               <>
-             
                 <h5>
                   <Link to={`/todos/${todo.id}`} className="text-primary">
                     {todo.title}
