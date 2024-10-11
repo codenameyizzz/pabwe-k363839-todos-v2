@@ -4,6 +4,15 @@ function todosReducer(todos = [], action = {}) {
   switch (action.type) {
     case ActionType.GET_TODOS:
       return action.payload.todos;
+
+    // Tambahkan logika untuk mengupdate todo
+    case ActionType.UPDATE_TODO:
+      return todos.map((todo) =>
+        todo.id === action.payload.todo.id
+          ? { ...todo, ...action.payload.todo }
+          : todo
+      );
+
     default:
       return todos;
   }

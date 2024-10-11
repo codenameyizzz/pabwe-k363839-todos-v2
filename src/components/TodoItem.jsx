@@ -39,13 +39,16 @@ function TodoItem({ todo, onDeleteTodo }) {
         description: editDescription,
         is_finished: todo.is_finished,
       })
-    );
-    setIsEditing(false); // Tutup mode edit setelah penyimpanan
+    )
+      .then(() => {
+        setIsEditing(false); // Atur state edit ke false setelah berhasil
+      })
+      .catch((error) => {
+        console.error("Failed to update todo:", error);
+      });
   };
 
-  
   return (
-    
     <div className="card mt-3">
       <div className="card-body">
         <div className="row align-items-center">
@@ -69,7 +72,6 @@ function TodoItem({ todo, onDeleteTodo }) {
               </div>
             ) : (
               <>
-             
                 <h5>
                   <Link to={`/todos/${todo.id}`} className="text-primary">
                     {todo.title}

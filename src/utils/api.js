@@ -139,13 +139,10 @@ const api = (() => {
     });
     const responseJson = await response.json();
     const { success, message } = responseJson;
+    console.log(responseJson);
     if (success !== true) {
       throw new Error(message);
     }
-    const {
-      data: { todo_id },
-    } = responseJson;
-    return todo_id;
   }
 
   async function deleteTodo(id) {

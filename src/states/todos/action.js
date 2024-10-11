@@ -121,8 +121,13 @@ function asyncUpdateTodo({ id, title, description, is_finished }) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
+      // Lakukan pembaruan todo di API
       await api.putUpdateTodo({ id, title, description, is_finished });
-      dispatch(updateTodoActionCreator(true));
+
+      // Dispatch action untuk mengupdate state di Redux
+      dispatch(
+        updateTodoActionCreator({ id, title, description, is_finished })
+      );
     } catch (error) {
       showErrorDialog(error.message);
     }
