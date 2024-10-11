@@ -8,9 +8,7 @@ function todosReducer(todos = [], action = {}) {
     // Tambahkan logika untuk mengupdate todo
     case ActionType.UPDATE_TODO:
       return todos.map((todo) =>
-        todo.id === action.payload.todo.id
-          ? { ...todo, ...action.payload.todo }
-          : todo
+        todo.id === action.payload.id ? { ...todo, ...action.payload } : todo
       );
 
     default:

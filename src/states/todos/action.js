@@ -126,7 +126,9 @@ function asyncUpdateTodo({ id, title, description, is_finished }) {
 
       // Dispatch action untuk mengupdate state di Redux
       dispatch(
-        updateTodoActionCreator({ id, title, description, is_finished })
+        updateTodoActionCreator({
+          todo: { id, title, description, is_finished },
+        })
       );
     } catch (error) {
       showErrorDialog(error.message);
